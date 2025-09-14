@@ -12,3 +12,4 @@
 - [1.6.](https://github.com/jipeso/KubernetesSubmissions/tree/1.6/manifests)
 - [1.7.](https://github.com/jipeso/KubernetesSubmissions/tree/1.7/manifests)
 - [1.8.](https://github.com/jipeso/KubernetesSubmissions/tree/1.8/manifests)
+- [1.9.](https://github.com/jipeso/KubernetesSubmissions/tree/1.9/pingpong-app)
