@@ -11,7 +11,7 @@ setInterval(() => {
     console.log(generateStatus())
 }, 5000)
 
-app.get('/', (req, res) => {
+app.get('/hashgenerator', (req, res) => {
     const status = generateStatus()
     res.send(status)
 })
