@@ -1,13 +1,22 @@
-const generateRandomString = () => {
-    const strings = []
-    const randomString = crypto.randomUUID()
-    strings.push(randomString)
+const express = require('express')
 
-    const timeStamp = new Date().toISOString()
+const app = express()
+const randomString = crypto.randomUUID()
 
-    console.log(timeStamp + ':', randomString)
-
-    setTimeout(generateRandomString, 5000)
+const generateStatus = () => {
+    return new Date().toISOString() + ': ' + randomString
 }
 
-generateRandomString()
+setInterval(() => {
+    console.log(generateStatus())
+}, 5000)
+
+app.get('/', (req, res) => {
+    const status = generateStatus()
+    res.send(status)
+})
+
+const PORT = process.env.PORT || 6000
+app.listen(PORT, () => {
+    console.log(`Timestamp on port ${PORT}`)
+})

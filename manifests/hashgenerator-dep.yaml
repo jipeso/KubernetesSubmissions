@@ -15,3 +15,6 @@ spec:
       containers:
         - name: hashgenerator
           image: jipesone/hashgenerator:latest
+          env:
+          - name: PORT
+            value: "6000"
