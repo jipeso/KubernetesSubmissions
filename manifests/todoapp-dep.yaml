@@ -12,12 +12,19 @@ spec:
       labels:
         app: todoapp
     spec:
+      volumes:
+        - name: todo-data
+          persistentVolumeClaim:
+            claimName: shared-claim
       containers:
         - name: todoapp
-          image: jipeso/todo-app:v1
+          image: jipeso/todo-app:v2
           env:
             - name: PORT
               value: "3000"
+          volumeMounts:
+            - name: todo-data
+              mountPath: /usr/src/app/files
           resources:
             requests:
               cpu: "50m"
