@@ -14,7 +14,14 @@ spec:
     spec:
       containers:
         - name: pingpong
-          image: jipesone/pingpong:latest
+          image: jipeso/pingpong:v1
           env:
-          - name: PORT
-            value: "3001"
+            - name: PORT
+              value: "3001"
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "100m"
+              memory: "128Mi"

@@ -12,9 +12,35 @@ spec:
       labels:
         app: hashgenerator
     spec:
+      volumes:
+        - name: shared-status
+          emptyDir: {}
       containers:
-        - name: hashgenerator
-          image: jipesone/hashgenerator:latest
+        - name: hash-reader
+          image: jipeso/hash-reader:v1
           env:
-          - name: PORT
-            value: "6000"
+            - name: PORT
+              value: "6000"
+          volumeMounts:
+            - name: shared-status
+              mountPath: /usr/src/app/files
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "100m"
+              memory: "128Mi"
+
+        - name: hash-writer
+          image: jipeso/hash-writer:v1
+          volumeMounts:
+            - name: shared-status
+              mountPath: /usr/src/app/files
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "100m"
+              memory: "128Mi"

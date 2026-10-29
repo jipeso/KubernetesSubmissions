@@ -14,7 +14,14 @@ spec:
     spec:
       containers:
         - name: todoapp
-          image: jipesone/todo-app:latest
+          image: jipeso/todo-app:v1
           env:
-          - name: PORT
-            value: "3000"
+            - name: PORT
+              value: "3000"
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "100m"
+              memory: "128Mi"
