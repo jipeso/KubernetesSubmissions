@@ -2,9 +2,8 @@ import { appendFile } from "node:fs/promises";
 
 const randomString = crypto.randomUUID();
 
+const file = "/usr/src/app/files/log.txt";
+
 setInterval(() => {
-  appendFile(
-    "/usr/src/app/files/log.txt",
-    `${new Date().toISOString()}: ${randomString}\n`,
-  );
+  appendFile(file, `${new Date().toISOString()}: ${randomString}\n`);
 }, 5000);

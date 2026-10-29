@@ -13,16 +13,17 @@ spec:
         app: hashgenerator
     spec:
       volumes:
-        - name: shared-status
-          emptyDir: {}
+        - name: hash-data
+          persistentVolumeClaim:
+            claimName: shared-claim
       containers:
         - name: hash-reader
-          image: jipeso/hash-reader:v1
+          image: jipeso/hash-reader:v2
           env:
             - name: PORT
               value: "6000"
           volumeMounts:
-            - name: shared-status
+            - name: hash-data
               mountPath: /usr/src/app/files
           resources:
             requests:
@@ -33,9 +34,9 @@ spec:
               memory: "128Mi"
 
         - name: hash-writer
-          image: jipeso/hash-writer:v1
+          image: jipeso/hash-writer:v2
           volumeMounts:
-            - name: shared-status
+            - name: hash-data
               mountPath: /usr/src/app/files
           resources:
             requests:
