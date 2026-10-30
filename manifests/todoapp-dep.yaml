@@ -18,7 +18,7 @@ spec:
             claimName: shared-claim
       containers:
         - name: todoapp
-          image: jipeso/todo-app:v3
+          image: jipeso/todo-app:v5
           env:
             - name: PORT
               value: "3000"

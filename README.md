@@ -21,3 +21,4 @@
 ### Chapter 2
 
 - [2.1.](https://github.com/jipeso/KubernetesSubmissions/tree/2.1)
+- [2.2.](https://github.com/jipeso/KubernetesSubmissions/tree/2.2)

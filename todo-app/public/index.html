@@ -9,22 +9,20 @@
     <h1>Todo App</h1>
     <img src="/image" />
 
-    <form>
+    <form id="todo-form">
       <input
         type="text"
-        name="todo"
+        name="content"
         maxlength="140"
         placeholder="Enter a new todo (max 140 characters)"
         required
       />
-      <button type="button">Send</button>
+      <button type="submit">Send</button>
     </form>
 
     <h2>Todos</h2>
-    <ul>
-      <li>Learn Kubernetes basics</li>
-      <li>Deploy application to cluster</li>
-      <li>Configure persistent volumes</li>
-    </ul>
+    <ul id="todo-list"></ul>
+
+    <script type="module" src="/app.js"></script>
   </body>
 </html>
