@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: pingpong
-          image: jipeso/pingpong:v3
+          image: jipeso/pingpong:v4
           env:
             - name: PORT
               value: "3001"

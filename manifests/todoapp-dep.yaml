@@ -19,10 +19,13 @@ spec:
             claimName: shared-claim
       containers:
         - name: todoapp
-          image: jipeso/todo-app:v5
+          image: jipeso/todo-app:v7
           env:
             - name: PORT
               value: "3000"
+          envFrom:
+            - configMapRef:
+                name: project-config
           volumeMounts:
             - name: todo-data
               mountPath: /usr/src/app/files

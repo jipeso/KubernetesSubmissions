@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: project
+  name: project-config
+data:
+  BACKEND_URL: http://todobackend-svc:7878
+  IMAGE_FILE_PATH: /usr/src/app/files/image.jpg
+  IMAGE_URL: https://picsum.photos/300

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: todobackend
-          image: jipeso/todo-backend:v1
+          image: jipeso/todo-backend:v2
           env:
             - name: PORT
               value: "5000"

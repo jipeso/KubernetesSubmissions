@@ -2,23 +2,19 @@ import express from "express";
 import { readFile } from "node:fs/promises";
 
 const app = express();
-const PORT = process.env.PORT || 6000;
-const MESSAGE = process.env.MESSAGE || "";
 
-const hashFile = "/usr/src/app/files/log.txt";
-const infoFile = "/usr/src/app/config/information.txt";
-const pingpongUrl = "http://pingpong-svc:4545/pongs";
+const { PORT, MESSAGE, LOG_FILE_PATH, INFO_FILE_PATH, PINGPONG_URL } =
+  process.env;
 
 app.get("/hashgenerator", async (_, res) => {
-  const hash = await readFile(hashFile, "utf8").catch(() => "");
-  const info = await readFile(infoFile, "utf8").catch(() => "");
+  const hash = await readFile(LOG_FILE_PATH, "utf8").catch(() => "");
+  const info = await readFile(INFO_FILE_PATH, "utf8").catch(() => "");
 
-  const { count } = await fetch(pingpongUrl)
+  const { count } = await fetch(PINGPONG_URL)
     .then((r) => r.json())
     .catch(() => ({ count: 0 }));
 
-  const mostRecentHash =
-    hash.trim().split("\n").at(-1) || "No hash generated yet";
+  const mostRecentHash = hash.trim().split("\n").at(-1);
 
   res.send(
     `file content: ${info} <br>

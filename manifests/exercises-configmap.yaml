@@ -4,6 +4,9 @@ metadata:
   namespace: exercises
   name: exercises-config
 data:
-  message: hello world
+  MESSAGE: hello world
+  LOG_FILE_PATH: /usr/src/app/files/log.txt
+  INFO_FILE_PATH: /usr/src/app/config/information.txt
+  PINGPONG_URL: http://pingpong-svc:4545/pongs
   information.txt: |
     this text is from a file
