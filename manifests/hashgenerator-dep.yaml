@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: exercises
   name: hashgenerator-dep
 spec:
   replicas: 1
@@ -14,8 +15,7 @@ spec:
     spec:
       volumes:
         - name: hash-data
-          persistentVolumeClaim:
-            claimName: shared-claim
+          emptyDir: {}
       containers:
         - name: hash-reader
           image: jipeso/hash-reader:v3

@@ -4,26 +4,12 @@ metadata:
   name: todoapp-ing
 spec:
   rules:
-  - http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: todoapp-svc
-            port:
-              number: 2323
-      - path: /pingpong
-        pathType: Prefix
-        backend:
-          service:
-            name: pingpong-svc
-            port:
-              number: 4545
-      - path: /hashgenerator
-        pathType: Prefix
-        backend:
-          service:
-            name: hashgenerator-svc
-            port:
-              number: 6767                    
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: todoapp-svc
+                port:
+                  number: 2323
