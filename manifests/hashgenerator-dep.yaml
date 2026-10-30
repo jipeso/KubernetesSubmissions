@@ -16,15 +16,29 @@ spec:
       volumes:
         - name: hash-data
           emptyDir: {}
+        - name: config-volume
+          configMap:
+            name: exercises-config
+            items:
+              - key: information.txt
+                path: information.txt
       containers:
         - name: hash-reader
-          image: jipeso/hash-reader:v3
+          image: jipeso/hash-reader:v5
           env:
             - name: PORT
               value: "6000"
+            - name: MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: exercises-config
+                  key: message
           volumeMounts:
             - name: hash-data
               mountPath: /usr/src/app/files
+            - name: config-volume
+              mountPath: /usr/src/app/config
+              readOnly: true
           resources:
             requests:
               cpu: "50m"
