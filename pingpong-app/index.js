@@ -1,17 +1,18 @@
 import express from "express";
-import { readFile, writeFile } from "node:fs/promises";
 
 const app = express();
 
 const PORT = process.env.PORT || 3001;
 
-const file = "/usr/src/app/files/pingpong.txt";
+let count = 0;
 
 app.get("/pingpong", async (_, res) => {
-  const currentCount = await readFile(file, "utf8").catch(() => "0");
-  const newCount = parseInt(currentCount) + 1;
-  await writeFile(file, newCount.toString());
-  res.send(`pong ${newCount}`);
+  count++;
+  res.send(`pong ${count}`);
+});
+
+app.get("/pongs", async (_, res) => {
+  res.json({ count });
 });
 
 app.listen(PORT, () => {

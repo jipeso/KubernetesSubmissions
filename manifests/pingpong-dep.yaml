@@ -12,16 +12,9 @@ spec:
       labels:
         app: pingpong
     spec:
-      volumes:
-        - name: pingpong-data
-          persistentVolumeClaim:
-            claimName: shared-claim
       containers:
         - name: pingpong
-          image: jipeso/pingpong:v2
-          volumeMounts:
-            - name: pingpong-data
-              mountPath: /usr/src/app/files
+          image: jipeso/pingpong:v3
           env:
             - name: PORT
               value: "3001"

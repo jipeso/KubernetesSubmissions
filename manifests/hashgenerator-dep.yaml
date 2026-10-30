@@ -18,7 +18,7 @@ spec:
             claimName: shared-claim
       containers:
         - name: hash-reader
-          image: jipeso/hash-reader:v2
+          image: jipeso/hash-reader:v3
           env:
             - name: PORT
               value: "6000"
