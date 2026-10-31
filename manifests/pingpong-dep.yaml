@@ -15,10 +15,15 @@ spec:
     spec:
       containers:
         - name: pingpong
-          image: jipeso/pingpong:v4
+          image: jipeso/pingpong:v6
           env:
             - name: PORT
               value: "3001"
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: exercises-config
+                  key: DATABASE_URL
           resources:
             requests:
               cpu: "50m"
