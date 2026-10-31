@@ -19,11 +19,13 @@ spec:
           env:
             - name: PORT
               value: "3001"
-            - name: DATABASE_URL
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 configMapKeyRef:
                   name: exercises-config
-                  key: DATABASE_URL
+                  key: POSTGRES_PASSWORD
+            - name: DATABASE_URL
+              value: "postgres://postgres:$(POSTGRES_PASSWORD)@postgres-svc:5432/postgres"
           resources:
             requests:
               cpu: "50m"

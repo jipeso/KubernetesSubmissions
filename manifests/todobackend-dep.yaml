@@ -15,10 +15,17 @@ spec:
     spec:
       containers:
         - name: todobackend
-          image: jipeso/todo-backend:v2
+          image: jipeso/todo-backend:v3
           env:
             - name: PORT
               value: "5000"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: project-config
+                  key: POSTGRES_PASSWORD
+            - name: DATABASE_URL
+              value: "postgres://postgres:$(POSTGRES_PASSWORD)@postgres-svc:5432/postgres"
           resources:
             requests:
               cpu: "50m"

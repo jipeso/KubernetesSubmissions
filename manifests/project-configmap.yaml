@@ -5,5 +5,6 @@ metadata:
   name: project-config
 data:
   BACKEND_URL: http://todobackend-svc:7878
+  POSTGRES_PASSWORD: postgres
   IMAGE_FILE_PATH: /usr/src/app/files/image.jpg
   IMAGE_URL: https://picsum.photos/300

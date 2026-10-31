@@ -1,33 +1,34 @@
 import express from "express";
 
+import { connectToDatabase, createTodo, getTodos } from "./util/db.js";
 const app = express();
 
 app.use(express.json());
 
 const PORT = process.env.PORT;
 
-const todos = [
-  { id: 1, content: "Learn Kubernetes" },
-  { id: 2, content: "Build a Node.js app" },
-  { id: 3, content: "Deploy to the cloud" },
-];
-
-app.get("/todos", (_, res) => {
+app.get("/todos", async (_, res) => {
+  const todos = await getTodos();
   res.json(todos);
 });
 
-app.post("/todos", (req, res) => {
+app.post("/todos", async (req, res) => {
   const { content } = req.body;
 
-  const newTodo = {
-    id: todos.length + 1,
-    content,
-  };
+  if (!content) {
+    return res.status(400).json({ error: "content is required" });
+  }
 
-  todos.push(newTodo);
+  const newTodo = await createTodo(content);
   res.status(201).json(newTodo);
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const start = async () => {
+  await connectToDatabase();
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+};
+
+start();
