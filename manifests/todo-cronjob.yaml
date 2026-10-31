@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  namespace: project
+  name: todo-cronjob
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: todo-cronjob
+              image: curlimages/curl
+              env:
+                - name: BACKEND_URL
+                  valueFrom:
+                    configMapKeyRef:
+                      name: project-config
+                      key: BACKEND_URL
+              command:
+                - sh
+                - -c
+                - |
+                  URL=$(curl -s -o /dev/null -w '%{redirect_url}' https://en.wikipedia.org/wiki/Special:Random)
+                  curl $BACKEND_URL/todos -H "Content-Type: application/json" -d "{\"content\": \"Read $URL\"}"
+          restartPolicy: OnFailure
