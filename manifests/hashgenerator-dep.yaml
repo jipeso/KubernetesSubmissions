@@ -24,7 +24,7 @@ spec:
                 path: information.txt
       containers:
         - name: hash-reader
-          image: jipeso/hash-reader:v6
+          image: jipeso/hash-reader:v7
           env:
             - name: PORT
               value: "6000"

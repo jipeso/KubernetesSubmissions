@@ -6,6 +6,10 @@ const app = express();
 const { PORT, MESSAGE, LOG_FILE_PATH, INFO_FILE_PATH, PINGPONG_URL } =
   process.env;
 
+app.get("/", (_, res) => {
+  res.sendStatus(200);
+});
+
 app.get("/hashgenerator", async (_, res) => {
   const hash = await readFile(LOG_FILE_PATH, "utf8").catch(() => "");
   const info = await readFile(INFO_FILE_PATH, "utf8").catch(() => "");

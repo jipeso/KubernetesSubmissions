@@ -20,4 +20,4 @@ spec:
               service:
                 name: hashgenerator-svc
                 port:
-                  number: 6767
+                  number: 80
