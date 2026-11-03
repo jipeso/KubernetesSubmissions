@@ -8,6 +8,6 @@ data:
   LOG_FILE_PATH: /usr/src/app/files/log.txt
   INFO_FILE_PATH: /usr/src/app/config/information.txt
   POSTGRES_PASSWORD: postgres
-  PINGPONG_URL: http://pingpong-svc:4545/pongs
+  PINGPONG_URL: http://pingpong-svc/pongs
   information.txt: |
     this text is from a file

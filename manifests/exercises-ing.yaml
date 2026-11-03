@@ -13,7 +13,7 @@ spec:
               service:
                 name: pingpong-svc
                 port:
-                  number: 4545
+                  number: 80
           - path: /hashgenerator
             pathType: Prefix
             backend:
