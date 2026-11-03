@@ -1,4 +1,7 @@
 import pg from "pg";
+
+import { logger } from "./logger.js";
+
 const { Pool } = pg;
 
 const pool = new Pool({
@@ -16,7 +19,7 @@ const initTodos = async () => {
 
 export const connectToDatabase = async () => {
   await pool.query("SELECT 1");
-  console.log("connected to database");
+  logger.info("connected to database");
   await initTodos();
 };
 
