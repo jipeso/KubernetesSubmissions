@@ -5,11 +5,11 @@ const app = express();
 
 const PORT = process.env.PORT;
 
-app.get("/", (_, res) => {
+app.get("/healthz", (_, res) => {
   res.sendStatus(200);
 });
 
-app.get("/pingpong", async (_, res) => {
+app.get("/", async (_, res) => {
   const count = await incrementCount();
   res.send(`pong ${count}`);
 });
