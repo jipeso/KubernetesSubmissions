@@ -4,7 +4,6 @@ metadata:
   namespace: project
   name: shared-claim
 spec:
-  storageClassName: local-pv
   accessModes:
     - ReadWriteOnce
   resources:
