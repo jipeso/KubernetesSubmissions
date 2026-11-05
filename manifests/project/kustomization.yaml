@@ -11,3 +11,4 @@ resources:
   - todobackend-dep.yaml
   - todobackend-svc.yaml
   - todo-cronjob.yaml
+  - todo-backup-cronjob.yaml

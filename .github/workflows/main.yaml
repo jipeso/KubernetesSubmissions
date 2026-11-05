@@ -49,7 +49,7 @@ jobs:
 
       - name: Set namespace
         run: |
-          if ["$BRANCH" = "main"]; then
+          if [ "$BRANCH" = "main" ]; then
             echo "NAMESPACE=project" >> $GITHUB_ENV
           else
             echo "NAMESPACE=$BRANCH" >> $GITHUB_ENV
