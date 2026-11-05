@@ -46,6 +46,14 @@ jobs:
           project_id: ${{ env.PROJECT_ID }}
           location: ${{ env.GKE_ZONE }}
 
+      - name: Set namespace
+        run: |
+          if ["$BRANCH" = "main"]; then
+            echo "NAMESPACE=project" >> $GITHUB_ENV
+          else
+            echo "NAMESPACE=$BRANCH" >> $GITHUB_ENV
+          fi
+
       - name: Form the image names
         run: |
           PREFIX=$REGISTRY/$PROJECT_ID/$REPOSITORY
@@ -68,9 +76,11 @@ jobs:
       - name: Deploy
         working-directory: manifests/project
         run: |-
+          kubectl create namespace $NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
+          kustomize edit set namespace $NAMESPACE
           kustomize edit set image jipeso/todo-app=$APP_IMAGE
           kustomize edit set image jipeso/todo-backend=$BACKEND_IMAGE
           kustomize build . | kubectl apply -f -
-          kubectl -n project rollout status deployment todoapp-dep
-          kubectl -n project rollout status deployment todobackend-dep
-          kubectl -n project get services,ingress -o wide
+          kubectl -n $NAMESPACE rollout status deployment todoapp-dep
+          kubectl -n $NAMESPACE rollout status deployment todobackend-dep
+          kubectl -n $NAMESPACE get services,ingress -o wide
