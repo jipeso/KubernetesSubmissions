@@ -2,6 +2,7 @@ name: Release pipeline
 
 on:
   push:
+  workflow_dispatch:
 
 permissions:
   contents: read
