@@ -39,3 +39,4 @@
 - [3.4.](https://github.com/jipeso/KubernetesSubmissions/tree/3.4)
 - [3.5.](https://github.com/jipeso/KubernetesSubmissions/tree/3.5)
 - [3.7.](https://github.com/jipeso/KubernetesSubmissions/tree/3.7)
+- [3.8.](https://github.com/jipeso/KubernetesSubmissions/tree/3.8)
