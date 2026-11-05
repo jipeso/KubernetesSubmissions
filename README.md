@@ -1,6 +1,6 @@
 # KubernetesSubmissions
 
-## Excercises
+## Exercises
 
 ### Chapter 1
 
@@ -40,3 +40,37 @@
 - [3.5.](https://github.com/jipeso/KubernetesSubmissions/tree/3.5)
 - [3.7.](https://github.com/jipeso/KubernetesSubmissions/tree/3.7)
 - [3.8.](https://github.com/jipeso/KubernetesSubmissions/tree/3.8)
+- [3.9.](https://github.com/jipeso/KubernetesSubmissions/tree/3.9)
+
+## DBaaS vs DIY
+
+Pros/Cons comparison of Google Cloud SQL Database as a Service (DBaaS) and a self-managed Postgres with PersistentVolumeClaims.
+
+### DBaaS
+
+#### Pros
+
+- Setting up is easy and fast
+- Low maintenance
+- Backups and monitoring are built-in
+
+#### Cons
+
+- Cost can get high
+- More setup to connect with applications safely
+- Harder to move to a different cloud (vendor lock-in)
+
+### DIY
+
+#### Pros
+
+- Cheaper because it runs on the existing nodes
+- Full control
+- Easy to move, no lock-in to one cloud provider
+- Simple networking inside the cluster
+
+#### Cons
+
+- Writing manifests yourself
+- Managing backups
+- Saved money can go into engineering time
