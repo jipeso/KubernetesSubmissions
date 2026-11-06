@@ -45,6 +45,10 @@
 - [3.11.](https://github.com/jipeso/KubernetesSubmissions/tree/3.11)
 - [3.12.](https://github.com/jipeso/KubernetesSubmissions/tree/3.12)
 
+### Chapter 4
+
+- [4.1.](https://github.com/jipeso/KubernetesSubmissions/tree/4.1)
+
 ## DBaaS vs DIY
 
 Pros/Cons comparison of Google Cloud SQL Database as a Service (DBaaS) and a self-managed Postgres with PersistentVolumeClaims.

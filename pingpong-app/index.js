@@ -1,12 +1,18 @@
 import express from "express";
-import { connectToDatabase, incrementCount, getCount } from "./util/db.js";
+import {
+  connectToDatabase,
+  checkConnection,
+  incrementCount,
+  getCount,
+} from "./util/db.js";
 
 const app = express();
 
 const PORT = process.env.PORT;
 
-app.get("/healthz", (_, res) => {
-  res.sendStatus(200);
+app.get("/healthz", async (_, res) => {
+  const isConnected = await checkConnection();
+  res.sendStatus(isConnected ? 200 : 500);
 });
 
 app.get("/", async (_, res) => {
@@ -19,12 +25,17 @@ app.get("/pongs", async (_, res) => {
   res.json({ count });
 });
 
-const start = async () => {
-  await connectToDatabase();
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
+const start = async () => {
+  try {
+    await connectToDatabase();
+  } catch {
+    console.log("DB not ready, retrying in 5 seconds...");
+    setTimeout(start, 5000);
+  }
 };
 
 start();

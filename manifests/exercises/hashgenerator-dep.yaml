@@ -24,7 +24,7 @@ spec:
                 path: information.txt
       containers:
         - name: hash-reader
-          image: jipeso/hash-reader:v7
+          image: jipeso/hash-reader:v8
           env:
             - name: PORT
               value: "6000"
@@ -44,6 +44,12 @@ spec:
             limits:
               cpu: "100m"
               memory: "128Mi"
+          readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            httpGet:
+              path: /healthz
+              port: 6000
 
         - name: hash-writer
           image: jipeso/hash-writer:v3
