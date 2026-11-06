@@ -26,10 +26,3 @@ spec:
                   key: POSTGRES_PASSWORD
             - name: DATABASE_URL
               value: "postgres://postgres:$(POSTGRES_PASSWORD)@postgres-svc:5432/postgres"
-          resources:
-            requests:
-              cpu: "50m"
-              memory: "64Mi"
-            limits:
-              cpu: "100m"
-              memory: "128Mi"

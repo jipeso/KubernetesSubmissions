@@ -12,3 +12,4 @@ resources:
   - todobackend-svc.yaml
   - todo-cronjob.yaml
   - todo-backup-cronjob.yaml
+  - project-limitrange.yaml
