@@ -35,6 +35,9 @@ app.post("/todos", async (req, res) => {
   }
 
   const newTodo = await createTodo(content);
+
+  logger.info("todo created", { id: newTodo.id, content: newTodo.content });
+
   res.status(201).json(newTodo);
 });
 
