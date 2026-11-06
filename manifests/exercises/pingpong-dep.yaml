@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: pingpong
-          image: jipeso/pingpong:v8
+          image: jipeso/pingpong:v9
           env:
             - name: PORT
               value: "3001"
@@ -33,3 +33,9 @@ spec:
             limits:
               cpu: "100m"
               memory: "128Mi"
+          readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            httpGet:
+              path: /healthz
+              port: 3001

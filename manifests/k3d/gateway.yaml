@@ -1,14 +1,14 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  namespace: exercises
-  name: exercises-gateway
+  namespace: default
+  name: shared-gateway
 spec:
-  gatewayClassName: gke-l7-global-external-managed
+  gatewayClassName: eg
   listeners:
     - name: http
       protocol: HTTP
       port: 80
       allowedRoutes:
-        kinds:
-          - kind: HTTPRoute
+        namespaces:
+          from: All

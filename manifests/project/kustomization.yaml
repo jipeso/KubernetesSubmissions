@@ -6,9 +6,8 @@ resources:
   - persistentvolumeclaim.yaml
   - todoapp-dep.yaml
   - todoapp-svc.yaml
-  - todoapp-ing.yaml
+  - todoapp-route.yaml
   - todoapp-stset.yaml
   - todobackend-dep.yaml
   - todobackend-svc.yaml
   - todo-cronjob.yaml
-  - todo-backup-cronjob.yaml

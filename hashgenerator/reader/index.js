@@ -6,8 +6,15 @@ const app = express();
 const { PORT, MESSAGE, LOG_FILE_PATH, INFO_FILE_PATH, PINGPONG_URL } =
   process.env;
 
-app.get("/", (_, res) => {
-  res.sendStatus(200);
+app.get("/healthz", async (_, res) => {
+  try {
+    const response = await fetch(PINGPONG_URL, {
+      signal: AbortSignal.timeout(2000),
+    });
+    res.sendStatus(response.ok ? 200 : 500);
+  } catch (error) {
+    res.sendStatus(500);
+  }
 });
 
 app.get("/hashgenerator", async (_, res) => {

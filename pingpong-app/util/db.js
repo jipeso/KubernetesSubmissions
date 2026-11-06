@@ -5,6 +5,10 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
+pool.on("error", (e) => {
+  console.error("pg pool error", e.message);
+});
+
 const initCount = async () => {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS counter (
@@ -13,19 +17,30 @@ const initCount = async () => {
     )
   `);
   await pool.query(
-    "INSERT INTO counter (id, count) VALUES (1, 0) ON CONFLICT (id) DO NOTHING"
+    "INSERT INTO counter (id, count) VALUES (1, 0) ON CONFLICT (id) DO NOTHING",
   );
 };
 
+export const checkConnection = async () => {
+  try {
+    await pool.query("SELECT 1");
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 export const connectToDatabase = async () => {
-  await pool.query("SELECT 1");
+  if (!(await checkConnection())) {
+    throw new Error("cannot reach database");
+  }
   console.log("connected to database");
   await initCount();
 };
 
 export const incrementCount = async () => {
   const result = await pool.query(
-    "UPDATE counter SET count = count + 1 WHERE id = 1 RETURNING count"
+    "UPDATE counter SET count = count + 1 WHERE id = 1 RETURNING count",
   );
   return result.rows[0].count;
 };
