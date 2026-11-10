@@ -8,6 +8,10 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
+pool.on("error", (e) => {
+  console.error("pg pool error", e.message);
+});
+
 const initTodos = async () => {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS todos (
@@ -17,8 +21,19 @@ const initTodos = async () => {
   `);
 };
 
+export const checkConnection = async () => {
+  try {
+    await pool.query("SELECT 1");
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 export const connectToDatabase = async () => {
-  await pool.query("SELECT 1");
+  if (!(await checkConnection())) {
+    throw new Error("cannot reach database");
+  }
   logger.info("connected to database");
   await initTodos();
 };

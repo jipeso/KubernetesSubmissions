@@ -28,6 +28,7 @@ button {
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   background: green;
+  color: white;
   cursor: pointer;
 }
 
@@ -49,4 +50,21 @@ li {
 
 li:hover {
   background: #e8f2e8;
+}
+
+#break-button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background: red;
+  color: white;
+  cursor: pointer;
+}
+
+.failure {
+  max-width: 500px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: #c62828;
+  color: white;
+  border-radius: 1rem;
 }

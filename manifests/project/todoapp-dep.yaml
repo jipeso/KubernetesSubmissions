@@ -21,7 +21,7 @@ spec:
             claimName: shared-claim
       containers:
         - name: todoapp
-          image: jipeso/todo-app:v7
+          image: jipeso/todo-app:v8
           env:
             - name: PORT
               value: "3000"
@@ -31,3 +31,17 @@ spec:
           volumeMounts:
             - name: todo-data
               mountPath: /usr/src/app/files
+          readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            httpGet:
+              path: /backendready
+              port: 3000
+          livenessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 3000

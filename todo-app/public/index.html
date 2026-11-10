@@ -6,22 +6,31 @@
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
-    <h1>Todo App</h1>
-    <img src="/image" />
+    <div id="failure" class="failure" hidden>
+      <h1>System Failure</h1>
+      <p>The Todo App is currently unhealthy. Please wait for recovery.</p>
+    </div>
 
-    <form id="todo-form">
-      <input
-        type="text"
-        name="content"
-        maxlength="140"
-        placeholder="Enter a new todo (max 140 characters)"
-        required
-      />
-      <button type="submit">Send</button>
-    </form>
+    <div id="app">
+      <h1>Todo App</h1>
+      <img src="/image" />
 
-    <h2>Todos</h2>
-    <ul id="todo-list"></ul>
+      <form id="todo-form">
+        <input
+          type="text"
+          name="content"
+          maxlength="140"
+          placeholder="Enter a new todo (max 140 characters)"
+          required
+        />
+        <button type="submit">Send</button>
+      </form>
+
+      <h2>Todos</h2>
+      <ul id="todo-list"></ul>
+
+      <button type="button" id="break-button">Break the app</button>
+    </div>
 
     <script type="module" src="/app.js"></script>
   </body>

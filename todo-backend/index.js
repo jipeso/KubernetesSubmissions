@@ -3,7 +3,12 @@ import morgan from "morgan";
 
 import { logger } from "./util/logger.js";
 
-import { connectToDatabase, createTodo, getTodos } from "./util/db.js";
+import {
+  connectToDatabase,
+  checkConnection,
+  createTodo,
+  getTodos,
+} from "./util/db.js";
 const app = express();
 
 app.use(morgan("tiny"));
@@ -11,6 +16,12 @@ app.use(express.json());
 
 const PORT = process.env.PORT;
 const MAX_CONTENT_LENGTH = 140;
+
+app.get("/healthz", async (_, res) => {
+  const isHealthy = await checkConnection();
+
+  res.sendStatus(isHealthy ? 200 : 500);
+});
 
 app.get("/todos", async (_, res) => {
   const todos = await getTodos();
@@ -41,12 +52,17 @@ app.post("/todos", async (req, res) => {
   res.status(201).json(newTodo);
 });
 
-const start = async () => {
-  await connectToDatabase();
+app.listen(PORT, () => {
+  logger.info(`Server running on port ${PORT}`);
+});
 
-  app.listen(PORT, () => {
-    logger.info(`Server running on port ${PORT}`);
-  });
+const start = async () => {
+  try {
+    await connectToDatabase();
+  } catch {
+    logger.info("DB not ready, retrying in 5 seconds...");
+    setTimeout(start, 5000);
+  }
 };
 
 start();

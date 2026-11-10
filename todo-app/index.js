@@ -1,6 +1,8 @@
 import express from "express";
 import { stat, writeFile } from "node:fs/promises";
 
+import { breakApp, healthMiddleware } from "./middleware/health.js";
+
 const app = express();
 app.use(express.json());
 
@@ -29,6 +31,29 @@ const addTodo = async (content) => {
   return response.json();
 };
 
+app.use(express.static("public"));
+app.use(healthMiddleware);
+
+app.get("/healthz", (_, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
+app.get("/backendready", async (_, res) => {
+  try {
+    const response = await fetch(`${BACKEND_URL}/healthz`, {
+      signal: AbortSignal.timeout(2000),
+    });
+    res.sendStatus(response.ok ? 200 : 500);
+  } catch {
+    res.sendStatus(500);
+  }
+});
+
+app.post("/break", (_, res) => {
+  breakApp();
+  res.status(200).json({ status: "ok" });
+});
+
 app.get("/todos", async (_, res) => {
   const todos = await fetchTodos();
   res.json(todos);
@@ -49,8 +74,6 @@ app.get("/image", async (_, res) => {
 
   res.sendFile(IMAGE_FILE_PATH);
 });
-
-app.use(express.static("public"));
 
 app.listen(PORT, () => {
   console.log(`Server started in port ${PORT}`);
