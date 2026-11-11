@@ -1,6 +1,7 @@
 import express from "express";
 import { stat, writeFile } from "node:fs/promises";
 
+import { errorHandler } from "./middleware/error.js";
 import { breakApp, healthMiddleware } from "./middleware/health.js";
 
 const app = express();
@@ -10,32 +11,32 @@ const PORT = process.env.PORT;
 const BACKEND_URL = process.env.BACKEND_URL;
 const IMAGE_FILE_PATH = process.env.IMAGE_FILE_PATH;
 const IMAGE_MAX_AGE_MS = 10 * 60 * 1000;
+const BACKEND_TIMEOUT_MS = 5000;
 
 const fetchImage = async () => {
   const response = await fetch(process.env.IMAGE_URL);
   await writeFile(IMAGE_FILE_PATH, Buffer.from(await response.arrayBuffer()));
 };
 
-const fetchTodos = async () => {
-  const response = await fetch(`${BACKEND_URL}/todos`);
-  return response.json();
-};
-
-const addTodo = async (content) => {
-  const response = await fetch(`${BACKEND_URL}/todos`, {
-    method: "POST",
+const proxyToBackend = async (req, res) => {
+  const response = await fetch(`${BACKEND_URL}${req.originalUrl}`, {
+    method: req.method,
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ content }),
+    body: JSON.stringify(req.body),
+    signal: AbortSignal.timeout(BACKEND_TIMEOUT_MS),
   });
 
-  return response.json();
+  res
+    .status(response.status)
+    .type("json")
+    .send(await response.text());
 };
 
 app.use(express.static("public"));
 app.use(healthMiddleware);
 
 app.get("/healthz", (_, res) => {
-  res.status(200).json({ status: "ok" });
+  res.json({ status: "ok" });
 });
 
 app.get("/backendready", async (_, res) => {
@@ -51,19 +52,12 @@ app.get("/backendready", async (_, res) => {
 
 app.post("/break", (_, res) => {
   breakApp();
-  res.status(200).json({ status: "ok" });
+  res.json({ status: "ok" });
 });
 
-app.get("/todos", async (_, res) => {
-  const todos = await fetchTodos();
-  res.json(todos);
-});
-
-app.post("/todos", async (req, res) => {
-  const { content } = req.body;
-  const todo = await addTodo(content);
-  res.status(201).json(todo);
-});
+app.get("/todos", proxyToBackend);
+app.post("/todos", proxyToBackend);
+app.put("/todos/:id", proxyToBackend);
 
 app.get("/image", async (_, res) => {
   const info = await stat(IMAGE_FILE_PATH).catch(() => null);
@@ -74,6 +68,8 @@ app.get("/image", async (_, res) => {
 
   res.sendFile(IMAGE_FILE_PATH);
 });
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server started in port ${PORT}`);

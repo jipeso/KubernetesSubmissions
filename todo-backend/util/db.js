@@ -9,7 +9,7 @@ const pool = new Pool({
 });
 
 pool.on("error", (e) => {
-  console.error("pg pool error", e.message);
+  logger.error("pg pool error", { error: e.message });
 });
 
 const initTodos = async () => {
@@ -18,6 +18,11 @@ const initTodos = async () => {
       id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
       content TEXT NOT NULL
     )
+  `);
+
+  await pool.query(`
+    ALTER TABLE todos
+    ADD COLUMN IF NOT EXISTS done BOOLEAN NOT NULL DEFAULT FALSE
   `);
 };
 
@@ -49,4 +54,12 @@ export const createTodo = async (content) => {
 export const getTodos = async () => {
   const result = await pool.query("SELECT * FROM todos ORDER BY id");
   return result.rows;
+};
+
+export const updateTodo = async (id, done) => {
+  const result = await pool.query(
+    "UPDATE todos SET done = $2 WHERE id = $1 RETURNING *",
+    [id, done],
+  );
+  return result.rows[0];
 };

@@ -1,6 +1,7 @@
+import { breakApp, createTodo, getTodos, markTodoDone } from "./api.js";
+
 const form = document.getElementById("todo-form");
 const list = document.getElementById("todo-list");
-const breakButton = document.getElementById("break-button");
 
 const showFailure = () => {
   document.getElementById("app").hidden = true;
@@ -9,28 +10,36 @@ const showFailure = () => {
 
 const addItem = (todo) => {
   const li = document.createElement("li");
+  const button = document.createElement("button");
+  const done = document.createElement("span");
   li.textContent = todo.content;
+  button.textContent = "Mark done";
+  done.textContent = "Done";
+
+  button.addEventListener("click", async () => {
+    const response = await markTodoDone(todo.id);
+    if (!response.ok) return showFailure();
+    button.replaceWith(done);
+  });
+
+  li.append(todo.done ? done : button);
   list.append(li);
 };
 
-breakButton.addEventListener("click", async () => {
-  await fetch("/break", { method: "POST" }).catch(() => null);
+document.getElementById("break-button").addEventListener("click", async () => {
+  await breakApp().catch(() => null);
   showFailure();
 });
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const response = await fetch("/todos", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ content: form.content.value }),
-  });
+  const response = await createTodo(form.content.value);
   if (!response.ok) return showFailure();
   addItem(await response.json());
   form.reset();
 });
 
-const response = await fetch("/todos").catch(() => null);
+const response = await getTodos().catch(() => null);
 if (response?.ok) {
   (await response.json()).forEach(addItem);
 } else {

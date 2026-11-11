@@ -8,6 +8,7 @@ import {
   checkConnection,
   createTodo,
   getTodos,
+  updateTodo,
 } from "./util/db.js";
 const app = express();
 
@@ -39,9 +40,7 @@ app.post("/todos", async (req, res) => {
   logger.info("todo received", { content });
 
   if (content.length > MAX_CONTENT_LENGTH) {
-    logger.info("todo creation failed: content exceeds maximum length", {
-      length: content.length,
-    });
+    logger.info("todo creation failed: content exceeds maximum length");
     return res.status(400).json({ error: "content exceeds maximum length" });
   }
 
@@ -50,6 +49,24 @@ app.post("/todos", async (req, res) => {
   logger.info("todo created", { id: newTodo.id, content: newTodo.content });
 
   res.status(201).json(newTodo);
+});
+
+app.put("/todos/:id", async (req, res) => {
+  const { id } = req.params;
+  const { done } = req.body;
+
+  if (typeof done !== "boolean") {
+    return res.status(400).json({ error: "done must be a boolean" });
+  }
+
+  const updatedTodo = await updateTodo(id, done);
+
+  if (!updatedTodo) {
+    return res.status(404).json({ error: "todo not found" });
+  }
+
+  logger.info("todo updated", { id, done });
+  res.json(updatedTodo);
 });
 
 app.listen(PORT, () => {

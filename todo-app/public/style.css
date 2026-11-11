@@ -48,6 +48,17 @@ li {
   border-radius: 0.5rem;
 }
 
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+li span {
+  color: green;
+  font-weight: bold;
+}
+
 li:hover {
   background: #e8f2e8;
 }
