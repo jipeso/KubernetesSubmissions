@@ -13,7 +13,7 @@ resources:
 images:
 - name: jipeso/hash-reader
   newName: jipeso/hash-reader
-  newTag: c2ab35698f306053fb9e05ceb09b2307e51f7006
+  newTag: f18ef24b8e19c7e93f90e93d8d58530ccd433b25
 - name: jipeso/hash-writer
   newName: jipeso/hash-writer
-  newTag: c2ab35698f306053fb9e05ceb09b2307e51f7006
+  newTag: f18ef24b8e19c7e93f90e93d8d58530ccd433b25
