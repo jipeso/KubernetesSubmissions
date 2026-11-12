@@ -36,7 +36,7 @@ jobs:
         uses: imranismail/setup-kustomize@v3
 
       - name: Use right images
-        working-directory: manifests/exercises
+        working-directory: manifests/project
         run: |-
           kustomize edit set image jipeso/todo-app=jipeso/todo-app:$GITHUB_SHA
           kustomize edit set image jipeso/todo-backend=jipeso/todo-backend:$GITHUB_SHA
@@ -46,5 +46,5 @@ jobs:
         uses: EndBug/add-and-commit@v11
         with:
           add: "manifests/project/kustomization.yaml"
-          message: New version released ${{ github.sha }}
+          message: New project version ${{ github.sha }}
           pull: "--rebase --autostash"
