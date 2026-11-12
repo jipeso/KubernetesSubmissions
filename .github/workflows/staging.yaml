@@ -1,4 +1,4 @@
-name: Build and publish project
+name: Deploy to staging
 
 on:
   push:
@@ -7,13 +7,13 @@ on:
       - "todo-app/**"
       - "todo-backend/**"
       - "broadcaster/**"
-      - ".github/workflows/project.yaml"
+      - ".github/workflows/staging.yaml"
 
 permissions:
   contents: write
 
 jobs:
-  build-and-publish:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -36,15 +36,15 @@ jobs:
         uses: imranismail/setup-kustomize@v3
 
       - name: Use right images
-        working-directory: manifests/project
+        working-directory: manifests/project/overlays/staging
         run: |-
-          kustomize edit set image jipeso/todo-app=jipeso/todo-app:$GITHUB_SHA
-          kustomize edit set image jipeso/todo-backend=jipeso/todo-backend:$GITHUB_SHA
-          kustomize edit set image jipeso/broadcaster=jipeso/broadcaster:$GITHUB_SHA
+          for app in todo-app todo-backend broadcaster; do
+            kustomize edit set image jipeso/$app=jipeso/$app:$GITHUB_SHA
+          done
 
-      - name: commit kustomization.yaml to GitHub
+      - name: Commit kustomization.yaml to GitHub
         uses: EndBug/add-and-commit@v11
         with:
-          add: "manifests/project/kustomization.yaml"
-          message: New project version ${{ github.sha }}
+          add: "manifests/project/overlays/staging/kustomization.yaml"
+          message: Staging release ${{ github.sha }}
           pull: "--rebase --autostash"

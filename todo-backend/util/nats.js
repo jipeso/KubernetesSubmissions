@@ -16,5 +16,8 @@ export const connectToNats = async () => {
 
 export const publishTodo = (action, todo) => {
   if (!nc || nc.isClosed()) return;
-  nc.publish("todos", JSON.stringify({ action, todo }));
+  nc.publish(
+    process.env.NATS_SUBJECT || "todos",
+    JSON.stringify({ action, todo }),
+  );
 };

@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: production
+resources:
+  - ../../base
+  - backup-pvc.yaml
+  - todo-backup-cronjob.yaml
+patches:
+  - path: configmap-patch.yaml
+images:
+  - name: jipeso/broadcaster
+    newName: jipeso/broadcaster
+    newTag: e47e4753fe15ea8647ce10786215c655a1ddd47f
+  - name: jipeso/todo-app
+    newName: jipeso/todo-app
+    newTag: e47e4753fe15ea8647ce10786215c655a1ddd47f
+  - name: jipeso/todo-backend
+    newName: jipeso/todo-backend
+    newTag: e47e4753fe15ea8647ce10786215c655a1ddd47f

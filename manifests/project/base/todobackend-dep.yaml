@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: project
   name: todobackend-dep
 spec:
   replicas: 1
@@ -31,6 +30,11 @@ spec:
                 configMapKeyRef:
                   name: project-config
                   key: NATS_URL
+            - name: NATS_SUBJECT
+              valueFrom:
+                configMapKeyRef:
+                  name: project-config
+                  key: NATS_SUBJECT
           readinessProbe:
             initialDelaySeconds: 10
             periodSeconds: 5

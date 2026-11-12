@@ -8,11 +8,18 @@ const nc = await connect({
 
 console.log("connected to nats");
 
-const sub = nc.subscribe("todos", { queue: "broadcaster" });
+const sub = nc.subscribe(process.env.NATS_SUBJECT || "todos", {
+  queue: "broadcaster",
+});
 
 for await (const msg of sub) {
   const { action, todo } = msg.json();
   const message = `Todo ${action}: ${todo.content}${todo.done ? " (done)" : ""}`;
+
+  if (!process.env.WEBHOOK_URL) {
+    console.log(message);
+    continue;
+  }
 
   try {
     const response = await fetch(process.env.WEBHOOK_URL, {

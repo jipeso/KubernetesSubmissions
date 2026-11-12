@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: project-config
+data:
+  NATS_SUBJECT: todos.staging
+  WEBHOOK_URL: ""
