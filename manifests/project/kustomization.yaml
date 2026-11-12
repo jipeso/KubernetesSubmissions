@@ -2,14 +2,24 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: project
 resources:
-  - project-configmap.yaml
-  - persistentvolumeclaim.yaml
-  - todoapp-dep.yaml
-  - todoapp-svc.yaml
-  - todoapp-route.yaml
-  - todoapp-stset.yaml
-  - todobackend-dep.yaml
-  - todobackend-svc.yaml
-  - todo-cronjob.yaml
-  - project-limitrange.yaml
-  - broadcaster-dep.yaml
+- project-configmap.yaml
+- persistentvolumeclaim.yaml
+- todoapp-dep.yaml
+- todoapp-svc.yaml
+- todoapp-route.yaml
+- todoapp-stset.yaml
+- todobackend-dep.yaml
+- todobackend-svc.yaml
+- todo-cronjob.yaml
+- project-limitrange.yaml
+- broadcaster-dep.yaml
+images:
+- name: jipeso/broadcaster
+  newName: jipeso/broadcaster
+  newTag: e47e4753fe15ea8647ce10786215c655a1ddd47f
+- name: jipeso/todo-app
+  newName: jipeso/todo-app
+  newTag: e47e4753fe15ea8647ce10786215c655a1ddd47f
+- name: jipeso/todo-backend
+  newName: jipeso/todo-backend
+  newTag: e47e4753fe15ea8647ce10786215c655a1ddd47f
