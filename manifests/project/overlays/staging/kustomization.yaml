@@ -2,17 +2,17 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: staging
 resources:
-  - ../../base
+- ../../base
 patches:
-  - path: configmap-patch.yaml
-  - path: route-patch.yaml
+- path: configmap-patch.yaml
+- path: route-patch.yaml
 images:
-  - name: jipeso/broadcaster
-    newName: jipeso/broadcaster
-    newTag: e47e4753fe15ea8647ce10786215c655a1ddd47f
-  - name: jipeso/todo-app
-    newName: jipeso/todo-app
-    newTag: e47e4753fe15ea8647ce10786215c655a1ddd47f
-  - name: jipeso/todo-backend
-    newName: jipeso/todo-backend
-    newTag: e47e4753fe15ea8647ce10786215c655a1ddd47f
+- name: jipeso/broadcaster
+  newName: jipeso/broadcaster
+  newTag: 3cf8eccf9e7c1c3e27b9b931cd53fd02907cacd5
+- name: jipeso/todo-app
+  newName: jipeso/todo-app
+  newTag: 3cf8eccf9e7c1c3e27b9b931cd53fd02907cacd5
+- name: jipeso/todo-backend
+  newName: jipeso/todo-backend
+  newTag: 3cf8eccf9e7c1c3e27b9b931cd53fd02907cacd5
