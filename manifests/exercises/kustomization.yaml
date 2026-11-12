@@ -2,16 +2,18 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: exercises
 resources:
-  - exercises-configmap.yaml
-  - exercises-route.yaml
-  - exercises-stset.yaml
-  - hashgenerator-dep.yaml
-  - hashgenerator-svc.yaml
-  - pingpong-svc.yaml
-  - pingpong-rollout.yaml
-  - cpu-analysistemplate.yaml
+- exercises-configmap.yaml
+- exercises-route.yaml
+- exercises-stset.yaml
+- hashgenerator-dep.yaml
+- hashgenerator-svc.yaml
+- pingpong-svc.yaml
+- pingpong-rollout.yaml
+- cpu-analysistemplate.yaml
 images:
-  - name: jipeso/hash-reader
-    newTag: v8
-  - name: jipeso/hash-writer
-    newTag: v3
+- name: jipeso/hash-reader
+  newName: jipeso/hash-reader
+  newTag: c2ab35698f306053fb9e05ceb09b2307e51f7006
+- name: jipeso/hash-writer
+  newName: jipeso/hash-writer
+  newTag: c2ab35698f306053fb9e05ceb09b2307e51f7006
