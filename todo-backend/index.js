@@ -10,6 +10,8 @@ import {
   getTodos,
   updateTodo,
 } from "./util/db.js";
+import { connectToNats, publishTodo } from "./util/nats.js";
+
 const app = express();
 
 app.use(morgan("tiny"));
@@ -46,6 +48,7 @@ app.post("/todos", async (req, res) => {
 
   const newTodo = await createTodo(content);
 
+  publishTodo("created", newTodo);
   logger.info("todo created", { id: newTodo.id, content: newTodo.content });
 
   res.status(201).json(newTodo);
@@ -65,6 +68,7 @@ app.put("/todos/:id", async (req, res) => {
     return res.status(404).json({ error: "todo not found" });
   }
 
+  publishTodo("updated", updatedTodo);
   logger.info("todo updated", { id, done });
   res.json(updatedTodo);
 });
@@ -76,6 +80,7 @@ app.listen(PORT, () => {
 const start = async () => {
   try {
     await connectToDatabase();
+    connectToNats();
   } catch {
     logger.info("DB not ready, retrying in 5 seconds...");
     setTimeout(start, 5000);

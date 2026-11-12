@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: project
+  name: broadcaster-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: broadcaster
+  template:
+    metadata:
+      labels:
+        app: broadcaster
+    spec:
+      containers:
+        - name: broadcaster
+          image: jipeso/broadcaster:v1
+          env:
+            - name: NATS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: project-config
+                  key: NATS_URL
+            - name: WEBHOOK_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: project-config
+                  key: WEBHOOK_URL

@@ -8,3 +8,5 @@ data:
   POSTGRES_PASSWORD: postgres
   IMAGE_FILE_PATH: /usr/src/app/files/image.jpg
   IMAGE_URL: https://picsum.photos/300
+  NATS_URL: nats://my-nats.nats.svc.cluster.local:4222
+  WEBHOOK_URL: https://webhook.site/131d5a25-c8c2-43f6-a11c-93f91dbcaefa

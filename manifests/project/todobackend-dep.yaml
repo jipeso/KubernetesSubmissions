@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: todobackend
-          image: jipeso/todo-backend:v7
+          image: jipeso/todo-backend:v8
           env:
             - name: PORT
               value: "5000"
@@ -26,6 +26,11 @@ spec:
                   key: POSTGRES_PASSWORD
             - name: DATABASE_URL
               value: "postgres://postgres:$(POSTGRES_PASSWORD)@postgres-svc:5432/postgres"
+            - name: NATS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: project-config
+                  key: NATS_URL
           readinessProbe:
             initialDelaySeconds: 10
             periodSeconds: 5
