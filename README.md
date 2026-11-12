@@ -1,5 +1,7 @@
 # KubernetesSubmissions
 
+Todo project config in <https://github.com/jipeso/dwk-project-config>
+
 ## Exercises
 
 ### Chapter 1
