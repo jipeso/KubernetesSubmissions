@@ -5,7 +5,7 @@ on:
     tags: ["*"]
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build-and-deploy:
@@ -27,24 +27,27 @@ jobs:
             docker push "jipeso/$app:$GITHUB_SHA"
           done
 
-      - name: Switch to main
-        run: |-
-          git fetch origin main
-          git checkout main
+      - name: Checkout config repo
+        uses: actions/checkout@v7
+        with:
+          repository: jipeso/dwk-project-config
+          token: ${{ secrets.CONFIG_REPO_TOKEN }}
+          path: config
 
       - name: Set up Kustomize
         uses: imranismail/setup-kustomize@v3
 
       - name: Use right images
-        working-directory: manifests/project/overlays/production
+        working-directory: config/overlays/production
         run: |-
           for app in todo-app todo-backend broadcaster; do
             kustomize edit set image jipeso/$app=jipeso/$app:$GITHUB_SHA
           done
 
-      - name: Commit kustomization.yaml to GitHub
+      - name: Commit kustomization.yaml to config repo
         uses: EndBug/add-and-commit@v11
         with:
-          add: "manifests/project/overlays/production/kustomization.yaml"
+          cwd: config
+          add: "overlays/production/kustomization.yaml"
           message: Production release ${{ github.ref_name }}
           pull: "--rebase --autostash"
