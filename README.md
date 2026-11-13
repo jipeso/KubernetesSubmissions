@@ -63,6 +63,7 @@ Todo project config in <https://github.com/jipeso/dwk-project-config>
 ### Chapter 5
 
 - [5.1.](https://github.com/jipeso/KubernetesSubmissions/tree/5.1)
+- [5.2.](https://github.com/jipeso/KubernetesSubmissions/tree/5.2)
 
 ## DBaaS vs DIY
 
