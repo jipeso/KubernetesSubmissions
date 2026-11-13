@@ -60,6 +60,10 @@ Todo project config in <https://github.com/jipeso/dwk-project-config>
 - [4.9.](https://github.com/jipeso/KubernetesSubmissions/tree/4.9)
 - [4.10.](https://github.com/jipeso/KubernetesSubmissions/tree/4.10)
 
+### Chapter 5
+
+- [5.1.](https://github.com/jipeso/KubernetesSubmissions/tree/5.1)
+
 ## DBaaS vs DIY
 
 Pros/Cons comparison of Google Cloud SQL Database as a Service (DBaaS) and a self-managed Postgres with PersistentVolumeClaims.
