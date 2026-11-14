@@ -2,24 +2,27 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: exercises
 resources:
-  - exercises-configmap.yaml
-  - exercises-route.yaml
-  - exercises-stset.yaml
-  - hashgenerator-dep.yaml
-  - hashgenerator-svc.yaml
-  - pingpong-svc.yaml
-  - pingpong-rollout.yaml
-  - cpu-analysistemplate.yaml
-  - namespace.yaml
-  - waypoint.yaml
-  - istio-gateway.yaml
-  - greeter-route.yaml
-  - greeter-dep.yaml
-  - greeter-svc.yaml
+- exercises-configmap.yaml
+- exercises-route.yaml
+- exercises-stset.yaml
+- hashgenerator-dep.yaml
+- hashgenerator-svc.yaml
+- pingpong-svc.yaml
+- pingpong-rollout.yaml
+- cpu-analysistemplate.yaml
+- namespace.yaml
+- waypoint.yaml
+- istio-gateway.yaml
+- greeter-route.yaml
+- greeter-dep.yaml
+- greeter-svc.yaml
 images:
-  - name: jipeso/hash-reader
-    newName: jipeso/hash-reader
-    newTag: f18ef24b8e19c7e93f90e93d8d58530ccd433b25
-  - name: jipeso/hash-writer
-    newName: jipeso/hash-writer
-    newTag: f18ef24b8e19c7e93f90e93d8d58530ccd433b25
+- name: jipeso/greeter
+  newName: jipeso/greeter
+  newTag: 251843349aec011a653b4755365ca1502070014c
+- name: jipeso/hash-reader
+  newName: jipeso/hash-reader
+  newTag: 251843349aec011a653b4755365ca1502070014c
+- name: jipeso/hash-writer
+  newName: jipeso/hash-writer
+  newTag: 251843349aec011a653b4755365ca1502070014c
