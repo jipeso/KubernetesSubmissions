@@ -3,8 +3,14 @@ import { readFile } from "node:fs/promises";
 
 const app = express();
 
-const { PORT, MESSAGE, LOG_FILE_PATH, INFO_FILE_PATH, PINGPONG_URL } =
-  process.env;
+const {
+  PORT,
+  MESSAGE,
+  LOG_FILE_PATH,
+  INFO_FILE_PATH,
+  PINGPONG_URL,
+  GREETER_URL,
+} = process.env;
 
 app.get("/healthz", async (_, res) => {
   try {
@@ -27,11 +33,16 @@ app.get("/hashgenerator", async (_, res) => {
 
   const mostRecentHash = hash.trim().split("\n").at(-1);
 
+  const { greeting } = await fetch(GREETER_URL)
+    .then((r) => r.json())
+    .catch(() => ({ greeting: "" }));
+
   res.send(
     `file content: ${info} <br>
     env variable: MESSAGE=${MESSAGE} <br>
     ${mostRecentHash} <br>
-    Ping / Pong: ${count}`,
+    Ping / Pong: ${count}<br>
+    greetings: ${greeting}`,
   );
 });
 

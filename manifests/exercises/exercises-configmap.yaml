@@ -11,3 +11,4 @@ data:
   PINGPONG_URL: http://pingpong-svc/pongs
   information.txt: |
     this text is from a file
+  GREETER_URL: http://greeter-svc/

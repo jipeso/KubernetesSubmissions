@@ -13,6 +13,9 @@ resources:
   - namespace.yaml
   - waypoint.yaml
   - istio-gateway.yaml
+  - greeter-route.yaml
+  - greeter-dep.yaml
+  - greeter-svc.yaml
 images:
   - name: jipeso/hash-reader
     newName: jipeso/hash-reader
