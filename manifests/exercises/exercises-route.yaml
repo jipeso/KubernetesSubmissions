@@ -28,9 +28,9 @@ spec:
         - name: hashgenerator-svc
           port: 80
     - matches:
-        -path:
-          type: PathPrefix
-          value: /wikipedia
+        - path:
+            type: PathPrefix
+            value: /wikipedia
       filters:
         - type: URLRewrite
           urlRewrite:
