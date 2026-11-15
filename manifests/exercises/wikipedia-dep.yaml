@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: exercises
+  name: wikipedia-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wikipedia
+  template:
+    metadata:
+      labels:
+        app: wikipedia
+    spec:
+      volumes:
+        - name: www
+          emptyDir: {}
+      initContainers:
+        - name: init-page
+          image: curlimages/curl
+          args:
+            [
+              "-o",
+              "/www/index.html",
+              "https://en.wikipedia.org/wiki/Kubernetes",
+            ]
+          volumeMounts:
+            - name: www
+              mountPath: /www
+        - name: randomizer-sidecar
+          image: curlimages/curl
+          restartPolicy: Always
+          args:
+            - sh
+            - -c
+            - while true; do sleep $(shuf -i 300-900 -n 1); curl -L -o /www/index.html https://en.wikipedia.org/wiki/Special:Random; done
+          volumeMounts:
+            - name: www
+              mountPath: /www
+
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: www
+              mountPath: /usr/share/nginx/html
