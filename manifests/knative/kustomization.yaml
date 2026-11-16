@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: exercises
+resources:
+  - exercises-configmap.yaml
+  - exercises-stset.yaml
+  - hashgenerator-dep.yaml
+  - hashgenerator-svc.yaml
+  - pingpong-ksvc.yaml
+images:
+  - name: jipeso/hash-reader
+    newTag: 251843349aec011a653b4755365ca1502070014c
+  - name: jipeso/hash-writer
+    newTag: 251843349aec011a653b4755365ca1502070014c

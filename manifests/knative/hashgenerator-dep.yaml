@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: exercises
+  name: hashgenerator-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hashgenerator
+  template:
+    metadata:
+      labels:
+        app: hashgenerator
+    spec:
+      volumes:
+        - name: hash-data
+          emptyDir: {}
+        - name: config-volume
+          configMap:
+            name: exercises-config
+            items:
+              - key: information.txt
+                path: information.txt
+      containers:
+        - name: hash-reader
+          image: jipeso/hash-reader
+          env:
+            - name: PORT
+              value: "6000"
+          envFrom:
+            - configMapRef:
+                name: exercises-config
+          volumeMounts:
+            - name: hash-data
+              mountPath: /usr/src/app/files
+            - name: config-volume
+              mountPath: /usr/src/app/config
+              readOnly: true
+        - name: hash-writer
+          image: jipeso/hash-writer
+          envFrom:
+            - configMapRef:
+                name: exercises-config
+          volumeMounts:
+            - name: hash-data
+              mountPath: /usr/src/app/files

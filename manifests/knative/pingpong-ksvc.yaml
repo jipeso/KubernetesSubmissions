@@ -1,0 +1,21 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: pingpong
+  namespace: exercises
+spec:
+  template:
+    spec:
+      containers:
+        - image: jipeso/pingpong:v9
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: exercises-config
+                  key: POSTGRES_PASSWORD
+            - name: DATABASE_URL
+              value: "postgres://postgres:$(POSTGRES_PASSWORD)@postgres-svc:5432/postgres"
+          readinessProbe:
+            httpGet:
+              path: /healthz
